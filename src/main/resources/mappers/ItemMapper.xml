@@ -44,6 +44,23 @@
 
     </select>
 
+    <select parameterType="map" resultType="int" id="consultarMultaRetrasoxDia">
+        select
+        i.tarifaxdia
+        FROM VI_ITEMS as i
+        WHERE i.id = #{id};
+    </select>
+
+    <select parameterType="map" id="consultarItemsDisponibles" resultMap="ItemResult">
+        SELECT *
+        FROM VI_ITEMS as i
+        WHERE i.id not in (SELECT ir.id from VI_ITEMRENTADO as ir);
+    </select>
+
+    <update parameterType="map" id="actualizarTarifaItem">
+        update VI_ITEMS set tarifaxdia=#{tarifa} where id=#{id};
+    </update>
+
     <resultMap type='Item' id='ItemResult'>
         <id property='id' column='item_id'/>
         <result property='nombre' column='item_nombre'/>

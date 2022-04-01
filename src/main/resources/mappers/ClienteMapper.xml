@@ -67,9 +67,50 @@
 
     </select>
 
+    <select parameterType="map" id="consultarItems" resultMap="ClienteResult">
+        select
+
+        c.nombre as nombreC,
+        c.documento as documentoC,
+        c.telefono as telefonoC,
+        c.direccion as direccionC,
+        c.email as emailC,
+        c.vetado as vetadoC,
+
+        ir.id as ir_id,
+        ir.fechainiciorenta as ir_fechainiciorenta,
+        ir.fechafinrenta as ir_fechafinrenta,
+
+        i.id as ir_item_id,
+        i.nombre as ir_item_nombre,
+        i.descripcion as ir_item_descripcion,
+        i.fechalanzamiento as ir_item_fechalanzamiento,
+        i.tarifaxdia as ir_item_tarifaxdia,
+        i.formatorenta as ir_item_formatorenta,
+        i.genero as ir_item_genero,
+        ti.id as ir_item_tipoItem_id,
+        ti.descripcion as ir_item_tipoItem_descripcion
+
+        FROM VI_CLIENTES as c
+        left join VI_ITEMRENTADO as ir on c.documento=ir.CLIENTES_documento
+        left join VI_ITEMS as i on ir.ITEMS_id=i.id
+        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id;
+
+        WHERE c.documento=#{idcliente};
+
+    </select>
+
     <insert id = "agregarItemRentadoACliente" parameterType="map">
         INSERT INTO VI_ITEMRENTADO(CLIENTES_documento, ITEMS_id, fechainiciorenta, fechafinrenta) VALUES(#{idcli}, #{idit}, #{fechai}, #{fechaf});
     </insert>
+
+    <insert id="registrarCliente" parameterType="map" >
+        INSERT INTO VI_CLIENTES values (#{cliente.documento},#{cliente.nombre},#{cliente.telefono},#{cliente.direccion},#{cliente.email},#{cliente.vetado});
+    </insert>
+
+    <update parameterType="map" id="vetarCliente">
+        update VI_CLIENTES set vetado=#{estado} where documento=#{docu};
+    </update>
 
     <resultMap type='Cliente' id='ClienteResult'>
         <id property='documento' column='documentoC'/>

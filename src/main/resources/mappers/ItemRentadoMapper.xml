@@ -5,6 +5,47 @@
 
 <mapper namespace="edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper">
 
+    <select parameterType="map" id='consultarItemRentado' resultMap="ItemRentadoResult">
+        select
+        ir.id ,
+        ir.fechainiciorenta ,
+        ir.fechafinrenta ,
+        i.id as item_id,
+        i.nombre as item_nombre,
+        i.descripcion as item_descripcion,
+        i.fechalanzamiento as item_fechalanzamiento,
+        i.tarifaxdia as item_tarifaxdia,
+        i.formatorenta as item_formatorenta,
+        i.genero as item_genero,
+        ti.id as item_tipoItem_id,
+        ti.descripcion as item_tipoItem_descripcion
+        FROM
+        VI_ITEMRENTADO as ir
+        join VI_ITEMS as i on ir.ITEMS_id=i.id
+        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
+        WHERE #{idr}=ir.id
+    </select>
+
+    <select parameterType="map" id='consultarItems' resultMap="ItemRentadoResult">
+        select
+        ir.id ,
+        ir.fechainiciorenta ,
+        ir.fechafinrenta ,
+        i.id as item_id,
+        i.nombre as item_nombre,
+        i.descripcion as item_descripcion,
+        i.fechalanzamiento as item_fechalanzamiento,
+        i.tarifaxdia as item_tarifaxdia,
+        i.formatorenta as item_formatorenta,
+        i.genero as item_genero,
+        ti.id as item_tipoItem_id,
+        ti.descripcion as item_tipoItem_descripcion
+        FROM
+        VI_ITEMRENTADO as ir
+        join VI_ITEMS as i on ir.ITEMS_id=i.id
+        left join VI_TIPOITEM as ti on i.TIPOITEM_id=ti.id
+    </select>
+
     <resultMap type='ItemRentado' id='ItemRentadoResult'>
         <id property='id' column='ID'/>
         <result property='fechainiciorenta' column='fechainiciorenta'/>
