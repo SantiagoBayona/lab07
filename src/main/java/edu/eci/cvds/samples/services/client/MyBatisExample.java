@@ -22,9 +22,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -61,21 +65,50 @@ public class    MyBatisExample {
      * @param args
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) throws SQLException, ParseException {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
 
         //Crear el mapper y usarlo: 
         ClienteMapper cm=sqlss.getMapper(ClienteMapper.class);
-        System.out.println(cm.consultarClientes());
+        ItemRentadoMapper ir=sqlss.getMapper(ItemRentadoMapper.class);
+        ItemMapper im=sqlss.getMapper(ItemMapper.class);
+        TipoItemMapper tm=sqlss.getMapper(TipoItemMapper.class);
+
+        //System.out.println(cm.consultarClientes());
         System.out.println("Consulta por cliente:");
-        System.out.println(cm.consultarCliente(101430));
-        ItemMapper intem=sqlss.getMapper(ItemMapper.class);
-        System.out.println("Consulta todos los items:");
-        System.out.println(intem.consultarItems());
-        System.out.println(intem.consultarItem(1));
+        //System.out.println(cm.consultarCliente(101430));
+        //System.out.println("Consulta todos los items:");
+        //System.out.println(im.consultarItems());
+        //System.out.println(im.consultarItem(1));
         //cm...
+        System.out.println("----------------------------");
+        cm.agregarItemRentadoACliente(6,2 ,
+                new SimpleDateFormat("yyyy/MM/dd").parse("2022/09/28"),
+                new SimpleDateFormat("yyyy/MM/dd").parse("2022/10/28"));
+        System.out.println(cm.consultarCliente(6));
+        System.out.println("Consultar item rentado por id");
+        System.out.println(ir.consultarItemRentado(2132577));
+        System.out.println(" ");
+        System.out.println("Consultar tipo items");
+        System.out.println(tm.getTiposItems());
+        System.out.println(" ");
+        System.out.println("Consultar tipo item por id");
+        System.out.println(tm.getTipoItem(2));
+        System.out.println(" ");
+        System.out.println("Consultar clientes");
+        System.out.println(cm.consultarClientes());
+        System.out.println(" ");
+        System.out.println("Consultar clientes por id");
+        System.out.println(cm.consultarCliente(101430));
+        System.out.println(" ");
+        System.out.println("Consultar items");
+        System.out.println(im.consultarItems());
+        System.out.println(" ");
+        System.out.println("Consultar items por id ");
+        System.out.println(im.consultarItem(1));
+        System.out.println(" ");
 
         sqlss.commit();
 
