@@ -44,7 +44,7 @@
             <p:inputText  id= "direccion" type="String" binding="#{direccion}" > </p:inputText>
             <p:outputLabel for="@next" value="Ingrese el email del cliente" />
             <p:inputText  id= "email" type="String" binding="#{email}" > </p:inputText>
-            <p:commandButton value="Registrar" update="FormaCliente"  actionListener="#{AlquilerItem.registrarCliente(nombre.value,documento.value,telefono.value,direccion.value,email.value)}" />
+            <p:commandButton value="Registrar" update="FormaCliente"  actionListener="#{AlquilerItemBeans.registrarCliente(nombre.value,documento.value,telefono.value,direccion.value,email.value)}" />
         </h:panelGrid>
     </h:form>
 </h:body>
