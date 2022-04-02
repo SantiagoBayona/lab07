@@ -13,6 +13,8 @@ import edu.eci.cvds.samples.entities.ItemRentado;
 import edu.eci.cvds.samples.entities.TipoItem;
 import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
 import edu.eci.cvds.samples.services.ServiciosAlquiler;
+import org.mybatis.guice.transactional.Transactional;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -127,6 +129,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         }
     }
 
+    @Transactional
     @Override
     public void registrarAlquilerCliente(Date date, long docu, Item item, int numdias) throws ExcepcionServiciosAlquiler {
         try{
@@ -142,6 +145,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         }
     }
 
+    @Transactional
     @Override
     public void registrarCliente(Cliente c) throws ExcepcionServiciosAlquiler {
         try{
@@ -165,6 +169,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         }
     }
 
+    @Transactional
     @Override
     public void actualizarTarifaItem(int id, long tarifa) throws ExcepcionServiciosAlquiler {
         try {
@@ -176,6 +181,8 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
             throw new ExcepcionServiciosAlquiler("No se pudo actualizar tarifa .", ex);
         }
     }
+
+    @Transactional
     @Override
     public void registrarItem(Item i) throws ExcepcionServiciosAlquiler {
         try {
@@ -185,6 +192,7 @@ public class ServiciosAlquilerImpl implements ServiciosAlquiler {
         }
     }
 
+    @Transactional
     @Override
     public void vetarCliente(long docu, boolean estado) throws ExcepcionServiciosAlquiler {
         try {

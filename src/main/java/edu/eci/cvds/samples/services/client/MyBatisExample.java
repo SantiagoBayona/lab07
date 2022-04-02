@@ -29,6 +29,8 @@ import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.services.ExcepcionServiciosAlquiler;
+import edu.eci.cvds.samples.services.ServiciosAlquilerFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -65,7 +67,7 @@ public class    MyBatisExample {
      * @param args
      * @throws SQLException 
      */
-    public static void main(String args[]) throws SQLException, ParseException {
+    public static void main(String args[]) throws SQLException, ParseException, ExcepcionServiciosAlquiler {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         SqlSession sqlss = sessionfact.openSession();
@@ -83,6 +85,7 @@ public class    MyBatisExample {
         //System.out.println(im.consultarItems());
         //System.out.println(im.consultarItem(1));
         //cm...
+        /**
         System.out.println("----------------------------");
         cm.agregarItemRentadoACliente(6,2 ,
                 new SimpleDateFormat("yyyy/MM/dd").parse("2022/09/28"),
@@ -113,7 +116,11 @@ public class    MyBatisExample {
         sqlss.commit();
 
         sqlss.close();
-
+        */
+        System.out.println("------CONSULTAMAIN------");
+        System.out.println(ServiciosAlquilerFactory.getInstance().getServiciosAlquiler().consultarCliente(20));
+        System.out.println(ServiciosAlquilerFactory.getInstance().getServiciosAlquiler().consultarCostoAlquiler(2,4));
+        System.exit(0);
     }
 
 
