@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title> Información del Cliente </title>
+    <link rel="stylesheet" type="text/css" href="styleClient.css" />
+</h:head>
+<h:body>
+    <h:form id="FormaAlquiler">
+        <p:dataTable var="alquiler" value="#{AlquilerItem.getselectedCliente().rentados}">
+            <f:facet name="header">
+                Informacion del Alquiler
+            </f:facet>
+            <p:column headerText="Id item">
+                <h:outputText value="#{alquiler.item.id}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{alquiler.item.nombre}" />
+            </p:column>
+            <p:column headerText="Precio">
+                <h:outputText value="#{alquiler.item.tarifaxDia}" />
+            </p:column>
+            <p:column headerText="Fecha inicial">
+                <h:outputText value="#{alquiler.fechainiciorenta}" />
+            </p:column>
+            <p:column headerText="Fecha final">
+                <h:outputText value="#{alquiler.fechafinrenta}" />
+            </p:column>
+            <p:column headerText="Descripción">
+                <h:outputText value="#{alquiler.item.descripcion}" />
+            </p:column>
+            <p:column headerText="Multa">
+                <h:outputText value="#{AlquilerItem.consultarMulta(alquiler.item.id)}" />
+            </p:column>
+
+        </p:dataTable>
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="@next" value="Ingrese id item" />
+            <p:inputText  id= "item" type="String" binding="#{id}" > </p:inputText>
+            <p:outputLabel for="@next" value="Ingrese el numero de días" />
+            <p:inputText  id= "numdias" type="String" binding="#{dias}" > </p:inputText>
+            <p:commandButton value="Registrar" update="FormaAlquiler" action="registroCliente?faces-redirect = true" actionListener="#{AlquilerItem.registrarAlquiler(id.value,dias.value)}"/>
+            <p:commandButton value="Consultar Costo" update="FormaAlquiler"  actionListener="#{AlquilerItem.consultarCosto(id.value,dias.value)}"/>
+            <p:outputLabel value="Costo del alquiler"/>
+            <h:outputText value="#{AlquilerItem.getCosto()}"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>

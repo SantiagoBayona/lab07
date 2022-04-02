@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title> Informacion del Cliente </title>
+    <link rel="stylesheet" type="text/css" href="styleClient.css" />
+</h:head>
+<h:body>
+    <h:form id="FormaCliente">
+        <p:dataTable id="clienteDT" var="cliente" value="#{AlquilerItem.consultarClientes()}" selection="#{AlquilerItem.selectedCliente}" rowKey="#{cliente.documento}">
+            <f:facet name="header">
+                Informacion de los Clientes
+            </f:facet>
+            <p:column selectionMode="single" style="width:16px;text-align:center"/>
+            <p:column headerText="Documento">
+                <h:outputText value="#{cliente.documento}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{cliente.nombre}" />
+            </p:column>
+            <p:column headerText="Telefono">
+                <h:outputText value="#{cliente.telefono}" />
+            </p:column>
+            <p:column headerText="Direccion">
+                <h:outputText value="#{cliente.direccion}" />
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{cliente.email}" />
+            </p:column>
+            <f:facet name="footer">
+                <h:commandButton id="Clientes"  value="Ver" action="registroAlquiler?faces-redirect = true"/>
+            </f:facet>
+        </p:dataTable>
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="@next" value="Ingrese el nombre del cliente" />
+            <p:inputText  id= "nombre" type="String" binding="#{nombre}" > </p:inputText>
+            <p:outputLabel for="@next" value="Ingrese el documento del cliente" />
+            <p:inputText  id= "documento" type="Long" binding="#{documento}" > </p:inputText>
+            <p:outputLabel for="@next" value="Ingrese el telefono del cliente" />
+            <p:inputText  id= "telefono" type="String" binding="#{telefono}" > </p:inputText>
+            <p:outputLabel for="@next" value="Ingrese la direccion del cliente" />
+            <p:inputText  id= "direccion" type="String" binding="#{direccion}" > </p:inputText>
+            <p:outputLabel for="@next" value="Ingrese el email del cliente" />
+            <p:inputText  id= "email" type="String" binding="#{email}" > </p:inputText>
+            <p:commandButton value="Registrar" update="FormaCliente"  actionListener="#{AlquilerItem.registrarCliente(nombre.value,documento.value,telefono.value,direccion.value,email.value)}" />
+        </h:panelGrid>
+    </h:form>
+</h:body>
+</html>
